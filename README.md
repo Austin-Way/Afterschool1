@@ -15,6 +15,7 @@ A modern web application that helps users set, validate, and track their goals u
 - **Measurability Check**: Validates that goals have clear, specific success criteria
 - **Smart Clarifying Questions**: AI asks questions about unfamiliar platforms, tools, or concepts
 - **Interactive Learning**: You can teach the AI about platforms it doesn't know
+- **Context Memory**: AI remembers your explanations and won't ask about the same terms again
 - **Smart Feedback**: Provides detailed feedback and suggestions for improvement
 
 ### ⭐ XP Tracking System
@@ -28,6 +29,7 @@ A modern web application that helps users set, validate, and track their goals u
 - **Progress Tracking**: Track active and completed goals
 - **Goal Completion**: Mark goals as completed with timestamps
 - **Goal History**: View all submitted goals with creation and completion dates
+- **Personal Context**: AI builds a personal knowledge base from your answers to clarifying questions
 
 ### 🎨 Modern UI/UX
 - **Beautiful Design**: Modern dark theme with gradient accents
