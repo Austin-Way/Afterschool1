@@ -11,6 +11,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Vercel serverless function compatibility
+const isVercel = process.env.VERCEL === '1';
+
 // Configure multer for file uploads
 const upload = multer({
   dest: 'uploads/',
@@ -35,10 +38,14 @@ app.use('/uploads', express.static('uploads'));
 
 // Session configuration
 app.use(session({
-  secret: 'goal-tracker-secret-key',
+  secret: process.env.SESSION_SECRET || 'goal-tracker-secret-key',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // 24 hours
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', 
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    sameSite: 'lax'
+  }
 }));
 
 // In-memory storage (replace with database in production)
@@ -465,14 +472,19 @@ app.get('/api/context', requireAuth, (req, res) => {
   res.json({ success: true, context: userContext });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`\n🎯 Goal Tracker App is running!`);
-  console.log(`📍 Open your browser and navigate to: http://localhost:${PORT}`);
-  console.log(`\n✨ Features:`);
-  console.log(`   • User authentication (register/login)`);
-  console.log(`   • AI-powered goal validation with Claude`);
-  console.log(`   • XP tracking with screenshot verification`);
-  console.log(`   • Goal difficulty and measurability assessment`);
-  console.log(`   • Goal progress tracking\n`);
-});
+// Start server (only in development, Vercel handles this in production)
+if (!isVercel) {
+  app.listen(PORT, () => {
+    console.log(`\n🎯 Goal Tracker App is running!`);
+    console.log(`📍 Open your browser and navigate to: http://localhost:${PORT}`);
+    console.log(`\n✨ Features:`);
+    console.log(`   • User authentication (register/login)`);
+    console.log(`   • AI-powered goal validation with Claude`);
+    console.log(`   • XP tracking with screenshot verification`);
+    console.log(`   • Goal difficulty and measurability assessment`);
+    console.log(`   • Goal progress tracking\n`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;

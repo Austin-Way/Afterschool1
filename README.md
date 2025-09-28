@@ -43,12 +43,12 @@ A modern web application that helps users set, validate, and track their goals u
 - Node.js (v14 or higher)
 - npm or yarn package manager
 
-### Installation
+### Local Development
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
-   cd goal-tracker
+   git clone https://github.com/Austin-Way/Afterschool1.git
+   cd Afterschool1
    ```
 
 2. **Install dependencies**:
@@ -56,13 +56,32 @@ A modern web application that helps users set, validate, and track their goals u
    npm install
    ```
 
-3. **Start the server**:
+3. **Setup environment**:
+   ```bash
+   cp env.example .env
+   # Add your Claude API key to .env
+   ```
+
+4. **Start the server**:
    ```bash
    npm start
    ```
 
-4. **Open your browser**:
+5. **Open your browser**:
    Navigate to `http://localhost:3000`
+
+### 🌐 Deploy to Vercel
+
+This application is optimized for Vercel deployment:
+
+1. **Fork/Clone the repository**
+2. **Connect to Vercel**:
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Add environment variable: `CLAUDE_API_KEY`
+3. **Deploy**: Vercel will automatically deploy your app!
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Austin-Way/Afterschool1.git)
 
 ## 🔧 Configuration
 
