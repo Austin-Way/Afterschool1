@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Tracker - AI-Powered Goal Validation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Authentication Section -->
+        <div id="authSection" class="auth-container">
+            <header class="auth-header">
+                <h1>🎯 Goal Tracker</h1>
+                <p class="subtitle">AI-Powered Goal Validation & Progress Tracking</p>
+        </header>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form">
+                <div class="form-card">
+                    <h2>Welcome Back</h2>
+                    <p class="form-description">Sign in to continue tracking your goals</p>
+                    
+                    <form id="loginFormElement">
+                        <div class="form-group">
+                            <label for="loginUsername">Username or Email</label>
+                            <input type="text" id="loginUsername" required>
+            </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required>
+                </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-icon">🔑</span>
+                            Sign In
+                        </button>
+                    </form>
+                    
+                    <div class="form-switch">
+                        <p>Don't have an account? <a href="#" onclick="switchToRegister()">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="auth-form hidden">
+                <div class="form-card">
+                    <h2>Create Account</h2>
+                    <p class="form-description">Join Goal Tracker to start achieving your goals</p>
+                    
+                    <form id="registerFormElement">
+                        <div class="form-group">
+                            <label for="registerUsername">Username</label>
+                            <input type="text" id="registerUsername" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span class="btn-icon">✨</span>
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <div class="form-switch">
+                        <p>Already have an account? <a href="#" onclick="switchToLogin()">Sign in</a></p>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        <!-- Main App Section -->
+        <div id="appSection" class="hidden">
+            <header class="app-header">
+                <div class="header-content">
+                    <h1>🎯 Goal Tracker</h1>
+                    <div class="user-info">
+                        <span id="welcomeUser">Welcome!</span>
+                        <button class="btn btn-secondary btn-sm" onclick="logout()">
+                            <span class="btn-icon">🚪</span>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <!-- Goal Submission Form -->
+                <div class="goal-form-section">
+                    <div class="section-header">
+                        <h2>Submit Your Goal</h2>
+                        <p class="section-description">Enter your goal and let AI validate its difficulty and measurability</p>
+                    </div>
+                    
+                    <div class="goal-form-card">
+                        <form id="goalForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="goalInput">Your Goal</label>
+                                <textarea 
+                                    id="goalInput" 
+                                    placeholder="e.g., Complete 150 XP in Python programming challenges, Send 12 personalized cold emails to potential clients, Write a 2000-word technical blog post..."
+                                    rows="4"
+                                    required
+                                ></textarea>
+                                <div class="form-hint">Be specific and measurable. Goals should require at least 3 hours of work.</div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="xpAmount">XP Amount (if applicable)</label>
+                                    <input 
+                                        type="number" 
+                                        id="xpAmount" 
+                                        placeholder="e.g., 150"
+                                        min="1"
+                                    >
+                                    <div class="form-hint">1 XP = ~1.5 minutes. Minimum 120 XP for 3 hours.</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="screenshot">XP Dashboard Screenshot</label>
+                                    <div class="file-upload">
+                                        <input type="file" id="screenshot" accept="image/*">
+                                        <div class="file-upload-text">
+                                            <span class="upload-icon">📸</span>
+                                            <span>Upload Screenshot</span>
+                    </div>
+                </div>
+                                    <div class="form-hint">Required for XP-related goals</div>
+                </div>
+            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="validateGoal()">
+                                    <span class="btn-icon">🤖</span>
+                                    Validate with AI
+                    </button>
+                                <button type="submit" class="btn btn-primary" id="submitGoalBtn" disabled>
+                                    <span class="btn-icon">🎯</span>
+                                    Submit Goal
+                    </button>
+                </div>
+                        </form>
+                        
+                        <!-- Validation Results -->
+                        <div id="validationResults" class="validation-results hidden">
+                            <div class="validation-header">
+                                <h3>AI Validation Results</h3>
+                            </div>
+                            <div id="validationContent"></div>
+            </div>
+                </div>
+            </div>
+
+                <!-- Goals List -->
+                <div class="goals-section">
+                    <div class="section-header">
+                        <h2>Your Goals</h2>
+                        <p class="section-description">Track your progress and manage your active goals</p>
+            </div>
+
+                    <div id="goalsList" class="goals-list">
+                        <div class="loading">Loading your goals...</div>
+                    </div>
+                </div>
+            </main>
+            </div>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast">
+            <span id="toastMessage"></span>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p id="loadingText">Processing...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
